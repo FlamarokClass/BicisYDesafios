@@ -1,0 +1,104 @@
+import bicis.*
+import accesorios.*
+import depositos.*
+
+describe "Test Depositos" {
+	const biciUno = new Bicicleta(rodado=28, largo=150, marca="Olmo")
+	const biciDos = new Bicicleta(rodado=26, largo=110, marca="Legnano")
+	const biciTres = new Bicicleta(rodado=20, largo=90, marca="Legnano")
+	
+	const biciCuatro= new Bicicleta(rodado=25, largo=170, marca="Legnano")
+	const biciCinco = new Bicicleta(rodado=26, largo=180, marca="Olmo")
+	const biciSeis = new Bicicleta(rodado=27, largo=190, marca="Olmo")
+		
+	const farolito1 = new Farolito()
+	const farolito2 = new Farolito()
+	const morral1 = new MorralDeBici(largo=21, tieneOjoDeGato= true)
+	const canasto1 = new Canasto(volumen=8)
+	const morral2 = new MorralDeBici(largo=6, tieneOjoDeGato= false)
+	
+	const morral3 = new MorralDeBici(largo=9, tieneOjoDeGato= false)
+	const canasto2 = new Canasto(volumen=10)
+	
+	const deposito1 = new Deposito()	
+	
+	const deposito2 = new Deposito()
+	
+	const deposito3 = new Deposito()
+		
+		
+	method initialize() {
+		biciUno.agregarAccesorio(farolito1)
+		
+		biciDos.agregarAccesorio(farolito2)
+		biciDos.agregarAccesorio(morral1)
+		biciDos.agregarAccesorio(canasto1)
+		
+		biciTres.agregarAccesorio(morral2)
+		
+		deposito1.agregarBici(biciUno)
+		deposito1.agregarBici(biciDos)
+		deposito1.agregarBici(biciTres)
+		
+		deposito2.agregarBici(biciUno) 
+		deposito2.agregarBici(biciDos)
+		
+		deposito3.agregarBici(biciCuatro)
+		deposito3.agregarBici(biciCinco)
+		biciCuatro.agregarAccesorio(morral3)
+		biciCinco.agregarAccesorio(canasto2)
+		
+		deposito3.agregarBici(biciSeis)
+	}
+	
+	
+	test "Bicis más rápidas del deposito1 son BiciUno y BiciDos" {
+		assert.equals([biciUno,biciDos], deposito1.bicisRapidas())
+	}	
+	
+	test "Las marcas de bicis del deposito1 son Olmo y Legnano" {
+		assert.equals(#{"Olmo","Legnano"}, deposito1.marcasDeBicis())
+	}	
+	
+	test "el deposito1 NO es nocturno" {
+		assert.notThat(deposito1.esNocturno())
+	}
+	
+	test "El deposito1 sí tiene bici para llevar 10 kilos" {
+		assert.that(deposito1.bicicletaParaCarga(10))
+	}
+	
+	test "El deposito1 NO tiene bici para llevar 50 kilos"{
+		assert.notThat(deposito1.bicicletaParaCarga(50))
+	}
+	
+	test "El deposito2 es nocturno" {
+		assert.that(deposito2.esNocturno())
+	}
+	
+	test "Marca mas rápida" {
+		assert.equals("Olmo", deposito1.marcaMasRapida())
+	}
+	
+	test "Carga total de Bicis Largas" {
+		assert.equals(23,deposito3.cargaTotalBicisLargas())
+	}
+	
+	test "Le quitamos todos los accesorios a BiciUno y BiciDos" {
+		biciUno.sacarAccesorio(farolito1)
+		biciDos.sacarAccesorio(farolito2)
+		biciDos.sacarAccesorio(morral1)
+		biciDos.sacarAccesorio(canasto1)
+		assert.equals(2,deposito1.bicicletasSinAccesorios())
+	}
+	
+	test "BiciCinco y BiciSeis Son compañeras"{
+		assert.that(biciCinco.sonCompanieras(biciSeis))
+	}
+	
+	test "BiciCinco encontró compañera en el deposito3"{
+		assert.equals([biciSeis],deposito3.bicisCompanieras(biciCinco))
+	}
+	
+
+}

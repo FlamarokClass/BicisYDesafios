@@ -1,0 +1,101 @@
+import bicis.*
+import accesorios.*
+
+describe "Test de Bicicletas" {
+		const biciUno = new Bicicleta(rodado=28, largo=150, marca="Olmo")
+		const biciDos = new Bicicleta(rodado=26, largo=110, marca="Legnano")
+		const biciTres = new Bicicleta(rodado=20, largo=90, marca="Legnano")
+		
+		const farolito1 = new Farolito()
+		const farolito2 = new Farolito()
+		const morral1 = new MorralDeBici(largo=21, tieneOjoDeGato= true)
+		const canasto1 = new Canasto(volumen=8)
+		const morral2 = new MorralDeBici(largo=6, tieneOjoDeGato= false)
+		
+		
+		
+	method initialize() {
+		biciUno.agregarAccesorio(farolito1)
+		
+		biciDos.agregarAccesorio(farolito2)
+		biciDos.agregarAccesorio(morral1)
+		biciDos.agregarAccesorio(canasto1)
+		
+		biciTres.agregarAccesorio(morral2)
+	}
+	
+	test "BiciUno mide 85 de altura" {
+		assert.equals(85, biciUno.altura())
+	}
+	
+	test "BiciUno tiene velocidad crucero 34" {
+		assert.equals(34, biciUno.velocidadCrucero())
+	}
+	
+	test "BiciUno tiene Carga 0kg" {
+		assert.equals(0, biciUno.carga())
+	}
+	
+	test "BiciUno pesa 14.5Kg " {
+		assert.equals(14.5, biciUno.peso())
+	}
+	
+	test "BiciUno tiene luz " {
+		assert.that(biciUno.tieneLuz())
+	}
+	
+	test "BiciUno tiene un accesorio liviano " {
+		assert.equals(1,biciUno.cantidadAccesoriosLivianos())
+	}
+	
+	// BICI DOS TEST
+	test "BiciDos mide 80 de altura" {
+		assert.equals(80, biciDos.altura())
+	}
+	
+	test "BiciDos tiene velocidad crucero 28" {
+		assert.equals(28, biciDos.velocidadCrucero())
+	}
+	
+	test "BiciDos pesa 15.5kg" {
+		assert.equals(15.5, biciDos.peso())
+	}
+	
+	test "BiciDos tiene Carga 23kg" {
+		assert.equals(23, biciDos.carga())
+	}
+	
+	test "BiciDos tiene Luz" {
+		assert.that(biciDos.tieneLuz())
+	}
+	
+	test "BiciDos tiene 2 accesorios livianos" {
+		assert.equals(2,biciDos.cantidadAccesoriosLivianos())
+	}
+	
+	// BICI TRES TEST
+	
+	test "BiciTres mide 65 de altura" {
+		assert.equals(65, biciTres.altura())
+	}
+	
+	test "BiciTres tiene velocidad crucero 22" {
+		assert.equals(22, biciTres.velocidadCrucero())
+	}
+	
+	test "BiciTres pesa 11.2kg" {
+		assert.equals(11.2, biciTres.peso())
+	}
+	
+	test "BiciTres tiene Carga 2kg" {
+		assert.equals(2, biciTres.carga())
+	}
+	
+	test "BiciTres NO tiene Luz" {
+		assert.notThat(biciTres.tieneLuz())
+	}
+	
+	test "BiciTres NO tiene  accesorios livianos" {
+		assert.equals(0,biciTres.cantidadAccesoriosLivianos())
+	}
+}
